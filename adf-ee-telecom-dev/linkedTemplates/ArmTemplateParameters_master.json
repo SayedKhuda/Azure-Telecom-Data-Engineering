@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-ee-telecom-dev"
+		},
+		"LS_LocalFiles_EETelecom_password": {
+			"value": ""
+		},
+		"LS_SQLServer_EETelecom_password": {
+			"value": ""
+		},
+		"LS_ADLS_EETelecom_properties_typeProperties_url": {
+			"value": "https://eetelecomadls01.dfs.core.windows.net/"
+		},
+		"LS_LocalFiles_EETelecom_properties_typeProperties_host": {
+			"value": "C:\\ITC\\Azure\\EE azure telecom data engineering project\\datasets"
+		},
+		"LS_LocalFiles_EETelecom_properties_typeProperties_userId": {
+			"value": "sayed_mahbub\\mahbu"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_server": {
+			"value": "localhost"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_database": {
+			"value": "EE_Telecom_DB"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_userName": {
+			"value": "adf_telecom_user"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

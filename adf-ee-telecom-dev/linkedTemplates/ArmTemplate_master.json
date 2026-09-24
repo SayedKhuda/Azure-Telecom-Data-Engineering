@@ -1,0 +1,98 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-ee-telecom-dev"
+		},
+		"LS_LocalFiles_EETelecom_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_LocalFiles_EETelecom'"
+		},
+		"LS_SQLServer_EETelecom_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_SQLServer_EETelecom'"
+		},
+		"LS_ADLS_EETelecom_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://eetelecomadls01.dfs.core.windows.net/"
+		},
+		"LS_LocalFiles_EETelecom_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\ITC\\Azure\\EE azure telecom data engineering project\\datasets"
+		},
+		"LS_LocalFiles_EETelecom_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "sayed_mahbub\\mahbu"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "localhost"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "EE_Telecom_DB"
+		},
+		"LS_SQLServer_EETelecom_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adf_telecom_user"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-ee-telecom-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_LocalFiles_EETelecom_password": {
+						"value": "[parameters('LS_LocalFiles_EETelecom_password')]"
+					},
+					"LS_SQLServer_EETelecom_password": {
+						"value": "[parameters('LS_SQLServer_EETelecom_password')]"
+					},
+					"LS_ADLS_EETelecom_properties_typeProperties_url": {
+						"value": "[parameters('LS_ADLS_EETelecom_properties_typeProperties_url')]"
+					},
+					"LS_LocalFiles_EETelecom_properties_typeProperties_host": {
+						"value": "[parameters('LS_LocalFiles_EETelecom_properties_typeProperties_host')]"
+					},
+					"LS_LocalFiles_EETelecom_properties_typeProperties_userId": {
+						"value": "[parameters('LS_LocalFiles_EETelecom_properties_typeProperties_userId')]"
+					},
+					"LS_SQLServer_EETelecom_properties_typeProperties_server": {
+						"value": "[parameters('LS_SQLServer_EETelecom_properties_typeProperties_server')]"
+					},
+					"LS_SQLServer_EETelecom_properties_typeProperties_database": {
+						"value": "[parameters('LS_SQLServer_EETelecom_properties_typeProperties_database')]"
+					},
+					"LS_SQLServer_EETelecom_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SQLServer_EETelecom_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
