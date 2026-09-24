@@ -1,0 +1,62 @@
+{
+	"name": "DS_SQL_Billing_EE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "bill_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "subscription_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "billing_month",
+				"type": "date"
+			},
+			{
+				"name": "monthly_charge",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "extra_usage_charge",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "total_bill_amount",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "payment_status",
+				"type": "varchar"
+			},
+			{
+				"name": "payment_date",
+				"type": "date"
+			},
+			{
+				"name": "payment_method",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "billing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

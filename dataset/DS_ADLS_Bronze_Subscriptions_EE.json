@@ -1,0 +1,67 @@
+{
+	"name": "DS_ADLS_Bronze_Subscriptions_EE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "subscriptions.parquet",
+				"folderPath": "subscriptions/full",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "customer_id",
+				"type": "INT32"
+			},
+			{
+				"name": "first_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "last_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "date_of_birth",
+				"type": "DATE"
+			},
+			{
+				"name": "gender",
+				"type": "UTF8"
+			},
+			{
+				"name": "city",
+				"type": "UTF8"
+			},
+			{
+				"name": "postcode",
+				"type": "UTF8"
+			},
+			{
+				"name": "email",
+				"type": "UTF8"
+			},
+			{
+				"name": "phone_number",
+				"type": "UTF8"
+			},
+			{
+				"name": "join_date",
+				"type": "DATE"
+			},
+			{
+				"name": "customer_status",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

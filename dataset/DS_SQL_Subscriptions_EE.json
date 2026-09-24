@@ -1,0 +1,58 @@
+{
+	"name": "DS_SQL_Subscriptions_EE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "subscription_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "mobile_number",
+				"type": "varchar"
+			},
+			{
+				"name": "plan_id",
+				"type": "varchar"
+			},
+			{
+				"name": "contract_start_date",
+				"type": "date"
+			},
+			{
+				"name": "contract_end_date",
+				"type": "date"
+			},
+			{
+				"name": "contract_type",
+				"type": "varchar"
+			},
+			{
+				"name": "monthly_charge",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "subscription_status",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "subscriptions"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

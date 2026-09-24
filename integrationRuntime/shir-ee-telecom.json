@@ -1,0 +1,7 @@
+{
+	"name": "shir-ee-telecom",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Self-hosted integration runtime for local EE Telecom SQL Server ingestion"
+	}
+}

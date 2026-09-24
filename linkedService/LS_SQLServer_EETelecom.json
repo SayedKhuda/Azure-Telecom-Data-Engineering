@@ -1,0 +1,21 @@
+{
+	"name": "LS_SQLServer_EETelecom",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "localhost",
+			"database": "EE_Telecom_DB",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "adf_telecom_user",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxNTFmZTJmYS1mZGIwLTRlYmQtODM1Yi1lMjA4NmZkZmNkMmIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "shir-ee-telecom",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

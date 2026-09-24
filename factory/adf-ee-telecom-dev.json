@@ -1,0 +1,15 @@
+{
+	"name": "adf-ee-telecom-dev",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5ba8589b-2255-4943-90c2-afc13e1727e4",
+		"tenantId": "2b32b1fa-7899-482e-a6de-be99c0ff5516"
+	}
+}

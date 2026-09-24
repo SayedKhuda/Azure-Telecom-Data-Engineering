@@ -1,0 +1,21 @@
+{
+	"name": "DS_ADLS_Subscriptions_CDC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "subscriptions/cdc",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

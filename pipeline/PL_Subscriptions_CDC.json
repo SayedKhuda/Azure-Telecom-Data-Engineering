@@ -1,0 +1,168 @@
+{
+	"name": "PL_Subscriptions_CDC",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_Subscriptions_CDC",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Current_Max_LSN",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": {
+							"value": "@concat(\n'SELECT *\nFROM cdc.fn_cdc_get_all_changes_dbo_subscriptions(\n    sys.fn_cdc_increment_lsn(CONVERT(binary(10), ''',\nactivity('Lookup_Last_LSN').output.firstRow.last_lsn,\n''', 1)),\n    CONVERT(binary(10), ''',\nactivity('Lookup_Current_Max_LSN').output.firstRow.current_max_lsn,\n''', 1),\n    ''all update old''\n);'\n)",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SQL_Customers_EE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLS_Subscriptions_CDC",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup_Last_LSN",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "-- Read the last successfully processed CDC LSN for subscriptions.\n-- Convert BINARY(10) to hex text so ADF can pass it between activities.\nSELECT\n    sys.fn_varbintohexstr(last_lsn) AS last_lsn\nFROM dbo.cdc_watermark\nWHERE table_name = 'subscriptions';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_SQL_Customers_EE",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Lookup_Current_Max_LSN",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Last_LSN",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "-- Get the current maximum CDC LSN.\nSELECT\n    sys.fn_varbintohexstr(sys.fn_cdc_get_max_lsn()) AS current_max_lsn;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_SQL_Customers_EE",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Update_Customers_Watermark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy_Subscriptions_CDC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_update_cdc_watermark]",
+					"storedProcedureParameters": {
+						"new_lsn": {
+							"value": {
+								"value": "@activity('Lookup_Current_Max_LSN').output.firstRow.current_max_lsn",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"table_name": {
+							"value": "subscriptions",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SQLServer_EETelecom",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-09-18T00:41:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

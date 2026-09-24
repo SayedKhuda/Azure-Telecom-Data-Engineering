@@ -1,0 +1,59 @@
+{
+	"name": "DS_SQL_UsageRecords_EE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQLServer_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "usage_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "subscription_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "usage_date",
+				"type": "date"
+			},
+			{
+				"name": "call_minutes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sms_count",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "data_usage_gb",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "roaming_minutes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "roaming_data_gb",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "usage_records"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

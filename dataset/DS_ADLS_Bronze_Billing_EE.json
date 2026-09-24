@@ -1,0 +1,22 @@
+{
+	"name": "DS_ADLS_Bronze_Billing_EE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_EETelecom",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "billing.parquet",
+				"folderPath": "billing/full",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
