@@ -1,0 +1,46 @@
+# CI validation for the Azure Data Factory deployment artifacts
+
+name: ADF CI Validation
+
+on:
+  # Run whenever ADF publishes new deployment artifacts
+  push:
+    branches:
+      - adf_publish
+
+  # Also allow us to run the workflow manually
+  workflow_dispatch:
+
+jobs:
+  validate-adf:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repository files
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Confirm that the ADF publish folder exists
+      - name: Check ADF publish folder
+        run: |
+          echo "Checking ADF deployment artifacts..."
+          test -d "adf-ee-telecom-dev"
+
+      # Confirm that the ARM template exists
+      - name: Check ARM template
+        run: |
+          test -f "adf-ee-telecom-dev/ARMTemplateForFactory.json"
+          echo "ARM template found."
+
+      # Confirm that the ARM parameter file exists
+      - name: Check ARM parameters
+        run: |
+          test -f "adf-ee-telecom-dev/ARMTemplateParametersForFactory.json"
+          echo "ARM parameter file found."
+
+      # Validate that both files contain valid JSON
+      - name: Validate JSON
+        run: |
+          python -m json.tool "adf-ee-telecom-dev/ARMTemplateForFactory.json" > /dev/null
+          python -m json.tool "adf-ee-telecom-dev/ARMTemplateParametersForFactory.json" > /dev/null
+          echo "ADF deployment artifacts are valid JSON."
